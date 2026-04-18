@@ -1,0 +1,5 @@
+{
+  "name": "Energy News Reporter",
+  "description": "Automated energy sector news aggregator and reporter with scheduled email summaries.",
+  "requestFramePermissions": []
+}

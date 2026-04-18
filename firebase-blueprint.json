@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "Settings": {
+      "title": "Settings",
+      "description": "Configuration for the energy news reporter",
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "Cron expression for the schedule"
+        },
+        "recipients": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of email addresses"
+        },
+        "summaryPrompt": {
+          "type": "string",
+          "description": "Prompt used for Gemini summarization"
+        },
+        "reportFormat": {
+          "type": "string",
+          "description": "Format description for the report (e.g. 'Markdown', 'HTML', 'Bullet points')"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["interval", "recipients", "summaryPrompt", "reportFormat"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "A generated energy news report",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["success", "failed"] },
+        "stage": { "type": "string", "description": "The stage where the failure occurred" },
+        "request": { "type": "string", "description": "The request payload or prompt that caused the failure" },
+        "error": { "type": "string", "description": "The error message received" }
+      },
+      "required": ["title", "content", "timestamp", "status"]
+    }
+  },
+  "firestore": {
+    "/settings/global": {
+      "schema": "Settings",
+      "description": "Global application settings"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "History of generated reports"
+    }
+  }
+}
